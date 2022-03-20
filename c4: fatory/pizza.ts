@@ -1,21 +1,25 @@
+import {
+  Cheese,
+  Clams,
+  Dough,
+  Pepperoni,
+  PizzaIngredientFactory,
+  Sauce,
+  Veggies,
+} from "./pizzaIngredientFactory";
+
 export default abstract class Pizza {
-  constructor(
-    protected name: string,
-    protected dough: string,
-    protected sauce: string,
-    protected toppings: Array<string> = []
-  ) {}
+  protected name: string;
+  protected dough: Dough;
+  protected sauce: Sauce;
+  protected veggies: Veggies[] = [];
+  protected cheese: Cheese;
+  protected pepperoni: Pepperoni;
+  protected clam: Clams;
 
-  public prepare(): void {
-    console.log("Prepare " + name);
-    console.log("Tossing dough...");
-    console.log("Adding sauce...");
-    console.log("Adding toppings: ");
+  constructor(protected ingredientFactory: PizzaIngredientFactory) {}
 
-    this.toppings.forEach((topping) => {
-      console.log("   " + topping);
-    });
-  }
+  public abstract prepare(): void;
 
   public bake(): void {
     console.log("Bake for 25 minutes at 350");
@@ -37,8 +41,8 @@ export default abstract class Pizza {
     // code to display pizza name and ingredients
     let display = `---- ${this.name} ----\n ${this.dough} \n ${this.sauce}\n`;
 
-    this.toppings.forEach((topping) => {
-      display += `${topping} \n`;
+    this.veggies.forEach((veggie) => {
+      display += `${veggie} \n`;
     });
 
     return display.toString();
